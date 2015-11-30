@@ -1,0 +1,45 @@
+/* シーン作成 */
+var scene = new THREE.Scene();
+
+/* カメラ作成 */
+var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+// カメラ位置を設定
+camera.position.z = 5;
+
+/* レンダラー作成 */
+var renderer = new THREE.WebGLRenderer();
+// サイズ
+renderer.setSize( window.innerWidth, window.innerHeight );
+// DOMに追加
+document.body.appendChild( renderer.domElement );
+
+
+/* 物体を生成 */
+
+// 形
+var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+// 素材
+var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+// 形と素材を組み合わせる
+var cube = new THREE.Mesh( geometry, material );
+// シーンに追加
+scene.add( cube );
+
+
+
+
+/* レンダリング */
+var render = function () {
+	// 繰り返し実行
+	requestAnimationFrame( render );
+
+	// 物体を回転
+	cube.rotation.x += 0.1;
+	cube.rotation.y += 0.1;
+
+	// カメラで撮影したシーンを描画
+	renderer.render(scene, camera);
+};
+
+// 実行
+render();
