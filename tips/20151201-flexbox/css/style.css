@@ -1,0 +1,40 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%; }
+
+body {
+  -webkit-text-size-adjust: 100%; }
+
+#container {
+  position: relative;
+  height: 100%;
+  min-height: 100%; }
+
+#contents {
+  padding-bottom: 100px; }
+  #contents .test-01 .boxContainer {
+    display: flex;
+    flex-direction: row; }
+  #contents .test-02 .boxContainer {
+    display: flex;
+    flex-direction: row-reverse; }
+  #contents .test-03 .boxContainer {
+    display: flex;
+    flex-direction: column; }
+  #contents .test-04 .boxContainer {
+    display: flex;
+    flex-direction: column-reverse; }
+
+.boxContainer {
+  border: solid 1px #333; }
+
+.box {
+  height: 100px;
+  width: 100px;
+  margin: 10px;
+  padding: 10px;
+  border: solid 1px #333;
+  background-color: #DDD; }
+
+/*# sourceMappingURL=style.css.map */

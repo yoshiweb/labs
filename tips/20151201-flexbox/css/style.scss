@@ -1,0 +1,89 @@
+body, html {
+  margin: 0;
+  padding: 0;
+
+  height: 100%;
+}
+
+body {
+  -webkit-text-size-adjust: 100%;
+}
+
+
+#container {
+  position: relative;
+  height: 100%;
+  min-height: 100%;
+}
+
+#contents {
+  padding-bottom: 100px;
+
+
+
+  .test-01{
+
+    .boxContainer {
+      display: flex;
+      // 左から右
+      flex-direction: row;
+    }
+
+  }
+  // .test-01
+
+
+  .test-02{
+
+    .boxContainer {
+      display: flex;
+      // 右から左
+      flex-direction: row-reverse;
+    }
+
+  }
+  // .test-02
+
+
+  .test-03{
+
+    .boxContainer {
+      display: flex;
+      // 上から下
+      flex-direction: column;
+    }
+
+  }
+  // .test-03
+
+  .test-04{
+
+    .boxContainer {
+      display: flex;
+      // 下から上
+      flex-direction: column-reverse;
+    }
+
+  }
+  // .test-04
+
+
+
+
+}
+
+
+
+
+.boxContainer {
+  border: solid 1px #333;
+}
+
+.box {
+  height: 100px;
+  width: 100px;
+  margin: 10px;
+  padding: 10px;
+  border: solid 1px #333;
+  background-color: #DDD;
+}
