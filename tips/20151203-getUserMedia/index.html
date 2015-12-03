@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>test</title>
+
+</head>
+<body>
+
+
+<video id="myVideo" src="" autoplay></video>
+
+<script>
+
+var video = document.getElementById('myVideo');
+ 
+//カメラ使えるかチェック
+var hasGetUserMedia = function() {
+    return (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+}
+
+// 接続エラー
+var onFailSoHard = function(e) {
+    console.log("ERROR", e);
+};
+
+if ( hasGetUserMedia() ) {
+    console.log("カメラ OK");
+} else {
+    alert("未対応ブラウザです。");
+}
+ 
+window.URL = window.URL || window.webkitURL;
+navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+navigator.getUserMedia({video: true}, function(stream) {
+  video.src = window.URL.createObjectURL(stream);
+}, onFailSoHard);
+
+</script>
+</body>
+</html>
