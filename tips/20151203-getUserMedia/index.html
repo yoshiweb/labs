@@ -8,35 +8,49 @@
 <body>
 
 <h1>Google Chrome では v47 からHTTPSじゃないとカメラに接続できないらしい</h1>
-<<div>参考：https://groups.google.com/forum/#!topic/skywayjs/WWS0qh47A7I</div>
+<div>HTTP：テスト<a href="http://yoshiweb.github.io/labs/tips/20151203-getUserMedia/">http://yoshiweb.github.io/labs/tips/20151203-getUserMedia/</a></div>
+<div>HTTPS：テスト<a href="https://yoshiweb.github.io/labs/tips/20151203-getUserMedia/">https://yoshiweb.github.io/labs/tips/20151203-getUserMedia/</a></div>
+
 
 <video id="myVideo" src="" autoplay></video>
+
+<div>参考：<a href="https://groups.google.com/forum/#!topic/skywayjs/WWS0qh47A7I">https://groups.google.com/forum/#!topic/skywayjs/WWS0qh47A7I</a></div>
+
+
+
 
 <script>
 
 var video = document.getElementById('myVideo');
- 
+
 //カメラ使えるかチェック
 var hasGetUserMedia = function() {
     return (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
 }
 
-// 接続エラー
-var onFailSoHard = function(e) {
-    console.log("ERROR", e);
-};
-
 if ( hasGetUserMedia() ) {
     console.log("カメラ OK");
+
+    // 接続エラー
+    var onFailSoHard = function(e) {
+        console.log("ERROR", e);
+        alert("接続エラー");
+    };
+
+    // カメラに接続
+    window.URL = window.URL || window.webkitURL;
+    navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    navigator.getUserMedia({video: true}, function(stream) {
+
+        // videoタグに描画
+        video.src = window.URL.createObjectURL(stream);
+
+    }, onFailSoHard);
+
 } else {
     alert("未対応ブラウザです。");
 }
- 
-window.URL = window.URL || window.webkitURL;
-navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
-navigator.getUserMedia({video: true}, function(stream) {
-  video.src = window.URL.createObjectURL(stream);
-}, onFailSoHard);
+
 
 </script>
 </body>
