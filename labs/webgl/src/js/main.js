@@ -13,6 +13,7 @@
     var renderer = new THREE.WebGLRenderer();
     // サイズ
     renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setClearColor(0xcccccc, 1);// 背景色
     // DOMに追加
     document.body.appendChild( renderer.domElement );
 
@@ -41,8 +42,8 @@
         requestAnimationFrame( render );
 
         // 物体を回転
-        cube.rotation.x += 0.1;
-        cube.rotation.y += 0.1;
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
 
         // カメラで撮影したシーンを描画
         renderer.render(scene, camera);
