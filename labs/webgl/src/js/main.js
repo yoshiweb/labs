@@ -22,12 +22,16 @@
     // 形
     var geometry = new THREE.BoxGeometry( 1, 1, 1 );
     // 素材
-    var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    var material = new THREE.MeshLambertMaterial( { color: 0x00ff00 } );
     // 形と素材を組み合わせる
     var cube = new THREE.Mesh( geometry, material );
     // シーンに追加
     scene.add( cube );
 
+    /* 光を作成 */
+    var light    = new THREE.DirectionalLight(0xffffff, 1.5); // 光源の色, 強さ
+    light.position.set(1,1,1);// 光源の位置
+    scene.add(light);// シーンに追加
 
 
 
