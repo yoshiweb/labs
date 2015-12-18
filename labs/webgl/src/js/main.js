@@ -4,19 +4,6 @@
     /* シーン作成 */
     var scene = new THREE.Scene();
 
-    /* カメラ作成 */
-    var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-    // カメラ位置を設定
-    camera.position.z = 5;
-
-    /* レンダラー作成 */
-    var renderer = new THREE.WebGLRenderer({antialias: true});
-    // サイズ
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    renderer.setClearColor(0xcccccc, 1);// 背景色
-    // DOMに追加
-    document.body.appendChild( renderer.domElement );
-
 
     /* 物体を生成 */
 
@@ -35,6 +22,20 @@
     scene.add(light);// シーンに追加
 
 
+
+    /* カメラ作成 */
+    var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+    // カメラ位置を設定
+    camera.position.z = 5;
+
+
+    /* レンダラー作成 */
+    var renderer = new THREE.WebGLRenderer({antialias: true});
+    renderer.setSize( window.innerWidth, window.innerHeight ); // サイズ
+    renderer.setClearColor(0xcccccc, 1); // 背景色
+
+    // DOMに追加
+    document.body.appendChild( renderer.domElement );
 
     /* レンダリング */
     var render = function () {
