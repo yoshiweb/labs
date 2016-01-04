@@ -22,7 +22,7 @@ canvas { width: 100%; height: 100% }
     renderer.setClearColor( new THREE.Color(0xffffff) );//背景色
     document.body.appendChild( renderer.domElement );
 
-    // メッシュ（物体）を作成　ジオメトリー（形）／マテリアル（素材）
+    // 立方体（横幅、縦幅、高さ）
     var geometry = new THREE.BoxGeometry( 1, 1, 1 );
     var material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
     var cube = new THREE.Mesh( geometry, material );
@@ -36,9 +36,9 @@ canvas { width: 100%; height: 100% }
         // レンダリングを繰り返し実行
         requestAnimationFrame( render );
 
-        // // 回転
-        // cube.rotation.x += 0.1;
-        // cube.rotation.y += 0.1;
+         // 回転
+         cube.rotation.x += 0.01;
+         cube.rotation.y += 0.01;
 
         // シーンをカメラで撮影して、レンダリング
         renderer.render(scene, camera);
