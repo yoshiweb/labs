@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<title>test</title>
+<style>
+body { margin: 0; }
+canvas { width: 100%; height: 100% }
+</style>
+</head>
+<body>
+<script src="js/three.min.js"></script>
+<script>
+    // シーン作成
+    var scene = new THREE.Scene();
+
+    // カメラ作成
+    var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+    // レンダリング
+    var renderer = new THREE.WebGLRenderer({ antialias:true });// レンダラの初期化
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setClearColor( new THREE.Color(0xffffff) );//背景色
+    document.body.appendChild( renderer.domElement );
+
+    // メッシュ（物体）を作成　ジオメトリー（形）／マテリアル（素材）
+    var geometry = new THREE.PlaneGeometry( 5, 20, 32 );
+    var material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+    var plane = new THREE.Mesh( geometry, material );
+    scene.add( plane );
+
+    // カメラ位置
+    camera.position.z = 5;
+
+    // レンダリング
+    var render = function () {
+        // レンダリングを繰り返し実行
+        requestAnimationFrame( render );
+
+        // // 回転
+        // cube.rotation.x += 0.1;
+        // cube.rotation.y += 0.1;
+
+        // シーンをカメラで撮影して、レンダリング
+        renderer.render(scene, camera);
+    };
+
+    // レンダリング
+    render();
+</script>
+</body>
+</html>
