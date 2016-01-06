@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<h1>Web Audio APIで 音量変更</h1>
+
+<div>
+    <p>音声ファイルは「あみたろの声素材工房」さんの声素材を使用させて頂きました。</p>
+    <p>声素材の著作権は「あみたろの声素材工房」さんにあります。</p>
+    <p><a href="http://www14.big.or.jp/~amiami/happy/">http://www14.big.or.jp/~amiami/happy/</a></p>
+</div>
+
+
+<div>
+<h2>音量</h2>
+<input type="range" min="0" max="100" value="50" oninput="changeVolume(this);">
+</div>
+
+
+<script>
+
+    // AudioContext確認
+    function hasAudioContext() {
+        return (window.AudioContext||window.webkitAudioContext);
+    }
+
+
+    if ( hasAudioContext() ){
+
+        // Fix up prefixing
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
+        // audioインスタンス作成
+        var _context = new AudioContext();
+
+
+        var _buffer = null;
+
+        var _gainNode = null;
+
+
+        /**
+         * 音声ファイル読み込み
+         * @param url
+         */
+        function _loadSound(url) {
+            var request = new XMLHttpRequest();
+            request.open('GET', url, true);
+            request.responseType = 'arraybuffer';
+
+            // 読み込み完了
+            request.onload = function() {
+
+                if( this.readyState === 4 ) {
+                    if( this.status === 200 ) {
+                        // レスポンスデータをaudioデータにデコード
+                        _context.decodeAudioData(this.response, function(buffer) {
+
+                            // デコードデータを格納
+                            _buffer = buffer;
+
+                            // 再生開始
+                            _playSound( buffer );
+
+                        }, _onErrorDecode);
+                    } else {
+                        alert("ERROE:読み込みに失敗しました");
+                    }
+                }
+            }
+            // 読み込み開始
+            request.send();
+        }
+
+        /**
+         * デコードERROR
+         */
+        function _onErrorDecode() {
+            alert("ERROE:デコードに失敗しました");
+        }
+
+        /**
+         * 再生開始
+         * @param buffer
+         * @private
+         */
+        function _playSound( buffer ) {
+
+            // gainNodeを取得
+            _gainNode = _context.createGain();
+
+            // ソースを取得
+            var source = _context.createBufferSource();
+
+            // デコードデータを代入
+            source.buffer = buffer;
+
+            // ソースと gain nodeを関連付ける
+            source.connect(_gainNode);
+
+            // gain Node と Audioインスタンスを関連付ける
+            _gainNode.connect(_context.destination);
+
+            // ループ
+            source.loop = true;
+
+            // 開始
+            source.start(0);
+        }
+
+
+        /**
+         * 音量変更
+         * @param element
+         */
+        function changeVolume(element) {
+            var volume = parseInt(element.value) / parseInt(element.max);
+            _gainNode.gain.value = volume;
+        }
+
+
+
+
+
+        // 読み込み開始
+        _loadSound("hajimemasite_01.mp3");
+
+    } else {
+        alert("Web Audio APIに対応してません。");
+    }
+
+</script>
+
+</body>
+</html>

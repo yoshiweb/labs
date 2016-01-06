@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<h1>Web Audio APIで フィルター</h1>
+
+<div>
+    <p>音声ファイルは「あみたろの声素材工房」さんの声素材を使用させて頂きました。</p>
+    <p>声素材の著作権は「あみたろの声素材工房」さんにあります。</p>
+    <p><a href="http://www14.big.or.jp/~amiami/happy/">http://www14.big.or.jp/~amiami/happy/</a></p>
+</div>
+
+<!--<div>-->
+<!--<h2>音量</h2>-->
+<!--<input type="range" min="0" max="100" value="50" oninput="changeVolume(this);">-->
+<!--</div>-->
+<div>
+    <h2>再生速度</h2>
+    <input type="range" min="0" max="100" value="50" oninput="changeRate(this);">
+</div>
+
+<div>
+    <h2>Frequency</h2>
+    <input type="range" min="0" max="1" step="0.01" value="1" onchange="changeFrequency(this);">
+</div>
+
+<div>
+    <h2>Quality</h2>
+    <input type="range" min="0" max="1" step="0.01" value="0" onchange="changeQuality(this);">
+</div>
+
+
+
+
+<script>
+
+    // AudioContext確認
+    function hasAudioContext() {
+        return (window.AudioContext||window.webkitAudioContext);
+    }
+
+
+    if ( hasAudioContext() ){
+
+        // Fix up prefixing
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
+        var _buffer = null;
+        var _source = null;
+
+        var _QUAL_MUL = 30;
+
+        // audioインスタンス作成
+        var _context = new AudioContext();
+        var _gainNode = _context.createGain();
+        var biquadFilter = _context.createBiquadFilter();
+
+        /**
+         * 音声ファイル読み込み
+         * @param url
+         */
+        function _loadSound(url) {
+            var request = new XMLHttpRequest();
+            request.open('GET', url, true);
+            request.responseType = 'arraybuffer';
+
+            // 読み込み完了
+            request.onload = function() {
+
+                if( this.readyState === 4 ) {
+                    if( this.status === 200 ) {
+                        // レスポンスデータをaudioデータにデコード
+                        _context.decodeAudioData(this.response, function(buffer) {
+
+                            // デコードデータを格納
+                            _buffer = buffer;
+
+                            // 再生開始
+                            _playSound( buffer );
+
+                        }, _onErrorDecode);
+                    } else {
+                        alert("ERROE:読み込みに失敗しました");
+                    }
+                }
+            }
+            // 読み込み開始
+            request.send();
+        }
+
+        /**
+         * デコードERROR
+         */
+        function _onErrorDecode() {
+            alert("ERROE:デコードに失敗しました");
+        }
+
+        /**
+         * 再生開始
+         * @param buffer
+         * @private
+         */
+        function _playSound( buffer ) {
+
+
+
+            _source = _context.createBufferSource();
+
+            _source.connect(_gainNode);
+
+            biquadFilter.connect( _context.destination );
+
+            _gainNode.connect(_context.destination);
+
+
+            // デコードデータを代入
+            _source.buffer = buffer;
+
+            _source.connect(biquadFilter);
+
+            // 参考
+            // https://developer.mozilla.org/ja/docs/Web/API/BiquadFilterNode
+            // http://weathercook.hatenadiary.jp/entry/20111207/1323242737
+            // http://curtaincall.weblike.jp/portfolio-web-sounder/webaudioapi-effectors/wah
+            // http://www.html5rocks.com/ja/tutorials/webaudio/intro/
+
+            biquadFilter.type = "lowpass";
+            biquadFilter.frequency.value = 5000;
+
+
+
+
+            // ループ
+            _source.loop = true;
+
+
+            // 開始
+            _source.start(0);
+        }
+
+
+        /**
+         * 音量変更
+         * @param element
+         */
+        function changeVolume(element) {
+            var volume = parseInt(element.value) / parseInt(element.max);
+            _gainNode.gain.value = volume;
+        }
+        /**
+         * 再生速度変更
+         * @param element
+         */
+        function changeRate(element) {
+            var value = parseInt(element.value) / parseInt(element.max);
+            _source.playbackRate.value = 0.5 + value;
+        }
+
+
+        /**
+         * Frequency 変更
+         * @param element
+         */
+        function changeFrequency(element) {
+            // Clamp the frequency between the minimum value (40 Hz) and half of the
+            // sampling rate.
+            var minValue = 40;
+            var maxValue = _context.sampleRate / 2;
+            // Logarithm (base 2) to compute how many octaves fall in the range.
+            var numberOfOctaves = Math.log(maxValue / minValue) / Math.LN2;
+            // Compute a multiplier from 0 to 1 based on an exponential scale.
+            var multiplier = Math.pow(2, numberOfOctaves * (element.value - 1.0));
+            // Get back to the frequency value between min and max.
+            biquadFilter.frequency.value = maxValue * multiplier;
+        };
+
+        /**
+         * Quality 変更
+         * @param element
+         */
+        function changeQuality(element) {
+            biquadFilter.Q.value = element.value * _QUAL_MUL;
+        };
+
+
+
+        // 読み込み開始
+        _loadSound("hajimemasite_01.mp3");
+
+
+    } else {
+        alert("Web Audio APIに対応してません。");
+    }
+
+</script>
+
+</body>
+</html>
