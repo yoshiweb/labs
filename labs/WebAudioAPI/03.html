@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>test</title>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <style>
+        body {
+            -webkit-text-size-adjust: 100%;
+        }
+    </style>
 </head>
 <body>
 
@@ -13,6 +20,9 @@
     <p>声素材の著作権は「あみたろの声素材工房」さんにあります。</p>
     <p><a href="http://www14.big.or.jp/~amiami/happy/">http://www14.big.or.jp/~amiami/happy/</a></p>
 </div>
+
+<button type="button" onclick="_click();">再生開始</button>
+
 
 <div>
     <h2>音量</h2>
@@ -66,7 +76,7 @@
                             _buffer = buffer;
 
                             // 再生開始
-                            _playSound( buffer );
+                            //_playSound( buffer );
 
                         }, _onErrorDecode);
                     } else {
@@ -137,13 +147,19 @@
 
 
 
-
         // 読み込み開始
         _loadSound("hajimemasite_01.mp3");
 
     } else {
         alert("Web Audio APIに対応してません。");
     }
+
+
+
+    function _click(){
+        _playSound( _buffer );
+    }
+
 
 </script>
 
