@@ -55,11 +55,10 @@
 
 
 
-
     /* レンダラー作成 */
-    var renderer = new THREE.WebGLRenderer({antialias: true});
-    renderer.setSize( window.innerWidth, window.innerHeight ); // サイズ
-    renderer.setClearColor(0xcccccc, 1); // 背景色
+    var renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});// 背景透過
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setClearColor(0xcccccc, 0);// 色、透明度
 
     // DOMに追加
     document.body.appendChild( renderer.domElement );

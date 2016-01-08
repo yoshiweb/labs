@@ -6,3 +6,4 @@ http://yoshiweb.github.io/labs/html/threejs/
 * OrbitControls 追加
 * AxisHelper 追加
 * 地面を配置
+* three.jsの背景を透過させる
