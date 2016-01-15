@@ -7,3 +7,4 @@ http://yoshiweb.github.io/labs/html/threejs/
 * AxisHelper 追加
 * 地面を配置
 * three.jsの背景を透過させる
+* cssブレンドモードで合成
