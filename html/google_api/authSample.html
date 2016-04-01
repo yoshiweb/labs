@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Google API</title>
+</head>
+<body>
+
+<!-- 認証ボタン -->
+<button id="authorize-button" style="visibility: hidden">認証</button>
+
+<div id="content"></div>
+<p>Google Plus API を通してプロフィール情報を取得</p>
+
+<script>
+
+var clientId = '129113646524-v16m3fekrvq410tpcq3f3bect0m3v5cc.apps.googleusercontent.com';
+var apiKey = 'AIzaSyABqi68E4GTMOmYd5w9s2OFUzFYb0C-fnY';
+
+// 認証を求めるAPIのスコープをスペース区切りで設定
+var scopes = 'https://www.googleapis.com/auth/plus.me';
+
+
+/**
+ * 読み込み完了後
+ */
+function handleClientLoad() {
+  
+  // API Keyを設定
+  gapi.client.setApiKey(apiKey);
+  
+  // 認証開始
+  window.setTimeout(checkAuth,1);
+}
+
+/**
+ * 認証確認
+ */
+function checkAuth() {
+  // immediateをtrueで指定することで、未認証の場合、ただちにエラーが返り、
+  // handleAuthResultが呼び出される。
+  gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: true}, handleAuthResult);
+}
+
+/**
+ * OAuth認証確認完了
+ */
+function handleAuthResult(authResult) {
+  
+  var authorizeButton = document.getElementById('authorize-button');
+  
+
+  if (authResult && !authResult.error) {
+    /* 認証済／エラーがない場合 */
+    
+    // 認証ボタンを非表示
+    authorizeButton.style.visibility = 'hidden';
+    
+    // APIにアクセスして情報を取得
+    makeApiCall();
+    
+  } else {
+    /* 認証がまだの場合、エラーがある場合 */
+    
+    // 認証ボタンを表示
+    authorizeButton.style.visibility = '';
+    authorizeButton.onclick = handleAuthClick;
+  }
+}
+
+/**
+ * 認証ボタンをクリック
+ */
+function handleAuthClick(event) {
+  // 認証開始
+  gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, handleAuthResult);
+  return false;
+}
+
+
+/**
+ * APIにアクセスして情報を取得
+ */
+function makeApiCall() {
+  
+  gapi.client.load('plus', 'v1', function() {
+    var request = gapi.client.plus.people.get({
+      'userId': 'me'
+    });
+    request.execute(function(resp) {
+      
+      // 取得結果を表示
+      var heading = document.createElement('h4');
+      var image = document.createElement('img');
+      image.src = resp.image.url;
+      heading.appendChild(image);
+      heading.appendChild(document.createTextNode(resp.displayName));
+
+      document.getElementById('content').appendChild(heading);
+    });
+  });
+}
+</script>
+<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Google API</title>
+<script>
+var _YOUTUBE_API_KEY = "AIzaSyABqi68E4GTMOmYd5w9s2OFUzFYb0C-fnY";
+
+/**
+ * 結果を表示
+ */
+function appendResults(text) {
+  console.log( "appendResults("+ text +");" );
+
+  var results = document.getElementById('results');
+  results.appendChild(document.createElement('P'));
+  results.appendChild(document.createTextNode(text));
+}
+
+/**
+ * APIにリクエストを送信
+ */
+function makeRequest() {
+  console.log( "makeRequest();" );
+
+  var request = gapi.client.urlshortener.url.get({
+    'shortUrl': 'http://goo.gl/fbsS'
+  });
+  request.then(function(response) {
+    // 成功時の関数を設定
+    appendResults(response.result.longUrl);
+  }, function(reason) {
+    // 失敗時
+    console.log('Error: ' + reason.result.error.message);
+  });
+}
+
+/**
+ * onload
+ */
+function init() {
+  console.log( "init();" );
+
+  // 短縮URLを元に戻す
+  gapi.client.setApiKey( _YOUTUBE_API_KEY );
+  gapi.client.load('urlshortener', 'v1').then(makeRequest);
+}
+
+</script>
+<script src="https://apis.google.com/js/client.js?onload=init"></script>
+</head>
+<body>
+  <h1>短縮URLを元に戻す</h1>
+  <div id="results"></div>
+</body>
+</html>
