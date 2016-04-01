@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>D3.js</title>
+
+
+<!--
+
+http://bl.ocks.org/mbostock/4237768
+-->
+
+<style>
+
+circle,
+path {
+  stroke: #000;
+}
+
+
+
+</style>
+</head>
+<body>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+
+var padding = 10;
+var width = 960;
+var height = 500;
+
+//ボロノイの座標
+var points = [
+  [200, 200],
+  [760, 300]
+];
+
+// 塗り色
+var color = [
+  "#ff0000",
+  "#00ff00"
+];
+
+// ボロノイ作成
+var voronoi = d3.geom.voronoi().clipExtent([[padding, padding], [width - padding, height - padding]]);
+
+
+
+// svg生成（横幅・縦幅）
+var svg = d3.select("body").append("svg").attr("width", width).attr("height", height);
+
+  
+// ボロノイをsvgに反映
+svg.selectAll("path")
+  .data( voronoi(points) )
+  .enter().append("path")
+  .style("fill", function(d, i) { return color[i]; })
+  .attr("d", function(d) { return "M" + d.join("L") + "Z"; });
+
+
+
+</script>
+</body>
+</html>
