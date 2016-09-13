@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>test</title>
+
+</head>
+<body>
+
+<div id="output"></div>
+
+
+<script src="js/jquery-3.1.0.js"></script>
+<script>
+$(document).ready(function () {
+
+  $.getJSON( "data.json", function( data ) {
+    
+    console.log( data );
+    
+    
+  });
+});
+</script>
+</body>
+</html>
