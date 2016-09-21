@@ -1,0 +1,47 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="txt" itemID="57e22589-00000122" symbolType="graphic" lastModified="1474438537">
+  <timeline>
+    <DOMTimeline name="txt">
+      <layers>
+        <DOMLayer name="レイヤー 1" color="#4F80FF" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMStaticText selected="true" fontRenderingMode="standard" width="280.2" height="90" autoExpand="true" antiAliasThickness="75" isSelectable="false">
+                  <matrix>
+                    <Matrix tx="-140.1" ty="-45"/>
+                  </matrix>
+                  <textRuns>
+                    <DOMTextRun>
+                      <characters>アニメーション</characters>
+                      <textAttrs>
+                        <DOMTextAttrs alignment="center" aliasText="false" autoKern="false" lineSpacing="10" lineHeight="40" size="40" bitmapSize="800" face="HiraKakuProN-W6" fillColor="#FF0000"/>
+                      </textAttrs>
+                    </DOMTextRun>
+                    <DOMTextRun>
+                      <characters>&#xD;</characters>
+                      <textAttrs>
+                        <DOMTextAttrs alignment="center" aliasText="false" autoKern="false" lineSpacing="10" lineHeight="40" size="40" bitmapSize="800" face="HiraKakuProN-W6" fillColor="#FF0000"/>
+                      </textAttrs>
+                    </DOMTextRun>
+                    <DOMTextRun>
+                      <characters>再生テスト</characters>
+                      <textAttrs>
+                        <DOMTextAttrs alignment="center" aliasText="false" autoKern="false" lineSpacing="10" lineHeight="40" size="40" bitmapSize="800" face="HiraKakuProN-W6" fillColor="#FF0000"/>
+                      </textAttrs>
+                    </DOMTextRun>
+                    <DOMTextRun>
+                      <characters></characters>
+                      <textAttrs>
+                        <DOMTextAttrs alignment="center" aliasText="false" autoKern="false" lineSpacing="10" lineHeight="40" size="40" bitmapSize="800" face="HiraKakuProN-W6" fillColor="#FF0000"/>
+                      </textAttrs>
+                    </DOMTextRun>
+                  </textRuns>
+                </DOMStaticText>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>
