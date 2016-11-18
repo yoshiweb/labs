@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>service-workers</title>
+  
+  <!--
+   
+   参考
+   
+   Service Worker の紹介
+   https://developers.google.com/web/fundamentals/getting-started/primers/service-workers?hl=ja
+   
+   -->
+  
+</head>
+<body>
+
+  
+  
+  
+  
+  <script>
+  
+  if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('assets/img/dog.jpg').then(function(registration) {
+    // 登録成功
+    console.log('登録成功 : ', registration.scope);
+  }).catch(function(err) {
+    // 登録失敗 :(
+    console.log('登録失敗 : ', err);
+  });
+}
+  
+  
+  </script>
+  
+  
+  
+  </body>
+</html>
