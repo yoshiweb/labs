@@ -17,10 +17,10 @@
         window.requestAnimationFrame(renderCanvas);
 
         // 描画前にクリア
-        ctx.clearRect(0, 0, 100, 100);
+        ctx.clearRect(0, 0, 128, 128);
 
-        const x = 50
-        const y = 50
+        const x = 64
+        const y = 64
 
         if (isZoom) {
             radius += scaleSpeed
@@ -183,10 +183,6 @@
         map: canvasTexture,
         alphaTest: 0.5,
         transparent: true,
-        // depthTest: false,
-        // depthWrite: true,
-        // overdraw: true,
-        // side: THREE.DoubleSide,
     });
 
     materialCanvas.blending = THREE.CustomBlending;
@@ -194,15 +190,15 @@
     materialCanvas.blendDst = THREE.OneMinusSrcAlphaFactor;
     materialCanvas.blendEquation = THREE.AddEquation;
 
-    var planeMesh = new THREE.Mesh(geometryCanvas, materialCanvas);
-    planeMesh.material.map.needsUpdate = true;
+    const player = new THREE.Mesh(geometryCanvas, materialCanvas);
+    player.material.map.needsUpdate = true;
 
-    planeMesh.position.x = -0.7;
-    planeMesh.position.y = 0.5;
-    planeMesh.position.z = 2;
-    // planeMesh.doubleSided = true;
+    // player.position.x = -0.7;
+    player.position.y = 0.64;
+    player.position.z = 2;
+    // player.doubleSided = true;
 
-    scene.add(planeMesh);
+    scene.add(player);
 
 
 
@@ -215,8 +211,8 @@
 
 
     let isMoveL = false;
-    const cameraSpeed = 0.005
-    const cameraRange = 1
+    const playerSpeed = 0.01
+    const playerRange = 2
 
     /* レンダリング */
     const render = function () {
@@ -226,21 +222,25 @@
         // ground.rotation.x -= 0.001
         // console.log(ground.rotation.x)
 
-        planeMesh.material.map.needsUpdate = true;
+        player.material.map.needsUpdate = true;
 
         if (isMoveL) {
-            camera.position.x += cameraSpeed
-            if (camera.position.x > cameraRange) {
+            player.position.x += playerSpeed
+            if (player.position.x > playerRange) {
                 isMoveL = false
             }
 
         } else {
-            camera.position.x -= cameraSpeed
-            if (camera.position.x < -cameraRange) {
+            player.position.x -= playerSpeed
+            if (player.position.x < -playerRange) {
                 isMoveL = true
             }
         }
         // console.log(camera.position.x)
+
+        // カメラをplayerに追従
+        camera.position.x = player.position.x;
+
 
         // カメラで撮影したシーンを描画
         renderer.render(scene, camera);
