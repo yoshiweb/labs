@@ -2,13 +2,20 @@
 
 
 ## 実験用リポジトリ
+
 https://github.com/yoshiweb/labs
 
+
 ## gh-pages
+
 https://yoshiweb.github.io/labs/
 
+
 ### blog
-http://yoshiweb.net/blog/
+
+https://yoshiweb.net/blog/
+
 
 ### twitter
+
 https://twitter.com/yoshiweb
