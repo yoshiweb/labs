@@ -3,7 +3,7 @@
 (function () {
 
     /* シーン作成 */
-    var scene = new THREE.Scene();
+    const scene = new THREE.Scene();
 
 
     const axes = new THREE.AxisHelper(100);
@@ -77,24 +77,36 @@
 
 
     /* 光を作成 */
-    var light = new THREE.DirectionalLight(0xffffff, 1.5); // 光源の色, 強さ
+    const light = new THREE.DirectionalLight(0xffffff, 1.5); // 光源の色, 強さ
     light.position.set(1, 1, 1);// 光源の位置
     scene.add(light);// シーンに追加
 
 
 
     /* カメラ作成 */
-    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     // カメラ位置を設定
     // camera.position.x = -1; // 横移動
     camera.position.y = 1;// 斜め上から
     camera.position.z = 5; // 少し下がる
     // camera.lookAt(scene.position); // 常に中心
 
+
+    // サイズを取得
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
     /* レンダラー作成 */
-    var renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight); // サイズ
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(windowWidth, windowHeight); // サイズ
     renderer.setClearColor(0xcccccc, 1); // 背景色
+
+    // レンダラーのサイズを調整する
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(windowWidth, windowHeight);
+
+    camera.aspect = windowWidth / windowHeight;
+    camera.updateProjectionMatrix();
 
     // DOMに追加
     document.body.appendChild(renderer.domElement);
@@ -104,7 +116,7 @@
     const cameraRange = 1
 
     /* レンダリング */
-    var render = function () {
+    const render = function () {
         // 繰り返し実行
         requestAnimationFrame(render);
 
